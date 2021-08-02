@@ -314,4 +314,45 @@ class WebSocketFeedTest extends TestCase
             echo "OnClose: {$code} {$reason}\n";
         }, $options);
     }
+
+    /**
+     * @dataProvider apiProvider
+     * @param WebSocketFeed $api
+     * @throws \Throwable
+     */
+    public function testSubscribeWalletAvailableBalanceChange(WebSocketFeed $api)
+    {
+        $query = ['connectId' => uniqid('t_', false),];
+        $channel = ['topic' => '/contractAccount/wallet'];
+
+        $options = [];
+        $api->subscribePrivateChannel($query, $channel, function (array $message, WebSocket $ws, LoopInterface $loop) use ($api) {
+            // Dynamic output
+            fwrite(STDIN, print_r($message, true));
+
+            $this->assertInternalType('array', $message);
+            $this->assertArrayHasKey('type', $message);
+            $this->assertArrayHasKey('topic', $message);
+            $this->assertArrayHasKey('subject', $message);
+            $this->assertArrayHasKey('data', $message);
+
+            if ($message['subject'] === 'availableBalance.change') {
+                $this->assertArrayHasKey('currency', $message['data']);
+                $this->assertArrayHasKey('holdBalance', $message['data']);
+                $this->assertArrayHasKey('availableBalance', $message['data']);
+                $this->assertArrayHasKey('timestamp', $message['data']);
+            }
+
+            if ($message['subject'] === 'withdrawHold.change') {
+                $this->assertArrayHasKey('currency', $message['data']);
+                $this->assertArrayHasKey('withdrawHold', $message['data']);
+                $this->assertArrayHasKey('timestamp', $message['data']);
+            }
+
+            // Stop for phpunit
+            $loop->stop();
+        }, function ($code, $reason) {
+            echo "OnClose: {$code} {$reason}\n";
+        }, $options);
+    }
 }
