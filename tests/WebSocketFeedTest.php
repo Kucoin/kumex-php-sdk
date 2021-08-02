@@ -221,4 +221,36 @@ class WebSocketFeedTest extends TestCase
             echo "OnClose: {$code} {$reason}\n";
         }, $options);
     }
+
+    /**
+     * @dataProvider apiProvider
+     * @param WebSocketFeed $api
+     * @throws \Throwable
+     */
+    public function testSubscribeLevel3v2(WebSocketFeed $api)
+    {
+        $query = ['connectId' => uniqid('t_', false),];
+        $channel = ['topic' => '/contractMarket/level3v2:XBTUSDM'];
+
+        $options = [];
+        $api->subscribePublicChannel($query, $channel, function (array $message, WebSocket $ws, LoopInterface $loop) use ($api) {
+            // Dynamic output
+            fwrite(STDIN, print_r($message, true));
+
+            $this->assertInternalType('array', $message);
+            $this->assertArrayHasKey('type', $message);
+            $this->assertArrayHasKey('topic', $message);
+            $this->assertArrayHasKey('subject', $message);
+            $this->assertArrayHasKey('data', $message);
+            $this->assertInternalType('array', $message['data']);
+            $this->assertArrayHasKey('symbol', $message['data']);
+            $this->assertArrayHasKey('sequence', $message['data']);
+            $this->assertArrayHasKey('orderId', $message['data']);
+
+            // Stop for phpunit
+            $loop->stop();
+        }, function ($code, $reason) {
+            echo "OnClose: {$code} {$reason}\n";
+        }, $options);
+    }
 }
