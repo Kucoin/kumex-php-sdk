@@ -1,15 +1,14 @@
 # PHP SDK for KuMEX API
 
-**Note:** This library isn't actively maintained. Please refer to the [kucoin-futures-python-sdk](https://github.com/Kucoin/kucoin-futures-python-sdk) for an up-to-date client implementation.
+**Note:** This library isn't actively maintained. Please switch to [kucoin-futures-php-sdk](https://github.com/Kucoin/kucoin-futures-php-sdk).
 
 > The detailed document [https://docs.kucoin.com/futures/](https://docs.kucoin.com/futures/), in order to receive the latest API change notifications, please `Watch` this repository.
 
 [![Latest Version](https://img.shields.io/github/release/Kucoin/kumex-php-sdk.svg)](https://github.com/Kucoin/kumex-php-sdk/releases)
-[![PHP Version](https://img.shields.io/packagist/php-v/Kucoin/kumex-php-sdk.svg?color=green)](https://secure.php.net)
+[![PHP Version](https://img.shields.io/packagist/php-v/kucoin/kumex-php-sdk.svg?color=green)](https://secure.php.net)
 [![Build Status](https://travis-ci.org/Kucoin/kumex-php-sdk.svg?branch=master)](https://travis-ci.org/Kucoin/kumex-php-sdk)
-[![Total Downloads](https://poser.pugx.org/Kucoin/kumex-php-sdk/downloads)](https://packagist.org/packages/Kucoin/kumex-php-sdk)
-[![License](https://poser.pugx.org/Kucoin/kumex-php-sdk/license)](LICENSE)
-[![Total Lines](https://tokei.rs/b1/github/Kucoin/kumex-php-sdk)](https://github.com/Kucoin/kumex-php-sdk)
+[![Total Downloads](https://poser.pugx.org/kucoin/kumex-php-sdk/downloads)](https://packagist.org/packages/kucoin/kumex-php-sdk)
+[![License](https://poser.pugx.org/kucoin/kumex-php-sdk/license)](LICENSE)
 
 ## Requirements
 
