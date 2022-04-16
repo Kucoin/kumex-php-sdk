@@ -2,13 +2,12 @@
 
 namespace KuMEX\SDK\Tests;
 
-use KuMEX\SDK\ApiCode;
 use KuMEX\SDK\Exceptions\BusinessException;
 use KuMEX\SDK\PrivateApi\Account;
 
 class AccountTest extends TestCase
 {
-    protected $apiClass = Account::class;
+    protected $apiClass    = Account::class;
     protected $apiWithAuth = true;
 
     /**
@@ -53,12 +52,12 @@ class AccountTest extends TestCase
     }
 
     /**
-     * @deprecated
-     * @dataProvider apiProvider
      * @param Account $api
      * @throws BusinessException
      * @throws \KuMEX\SDK\Exceptions\HttpException
      * @throws \KuMEX\SDK\Exceptions\InvalidApiUriException
+     * @deprecated
+     * @dataProvider apiProvider
      */
 //    public function testTransferIn(Account $api)
 //    {
@@ -79,8 +78,8 @@ class AccountTest extends TestCase
      */
     public function testTransferOut(Account $api)
     {
-        $bizNo    = rand(1, 9999);
-        $amount   = 0.1;
+        $bizNo = rand(1, 9999);
+        $amount = 0.1;
         $accounts = $api->transferOut($bizNo, $amount);
         $this->assertInternalType('array', $accounts);
         if (isset($accounts['applyId'])) {
@@ -133,7 +132,7 @@ class AccountTest extends TestCase
     private function getTransferId($api)
     {
         $bizNo = '10000000001';
-        $amount   = 0.1;
+        $amount = 0.1;
         $accounts = $api->transferOut($bizNo, $amount);
         $this->assertInternalType('array', $accounts);
         return $accounts['applyId'];
@@ -149,14 +148,26 @@ class AccountTest extends TestCase
      */
     public function testTransferOutV2(Account $api)
     {
-        $bizNo    = rand(1, 9999);
-        $amount   = 0.1;
-        $currency = 'XBT';
-        $accounts = $api->transferOutV2($bizNo, $amount, $currency);
-        $this->assertInternalType('array', $accounts);
-        if (isset($accounts['applyId'])) {
-            $this->assertArrayHasKey('applyId', $accounts);
-        }
-    }
+        $bizNo = uniqid('t_', false);
+        $amount = 0.01;
+        $currency = 'USDT';
+        $data = $api->transferOutV2($bizNo, $amount, $currency);
 
+        $this->assertInternalType('array', $data);
+
+        $this->assertArrayHasKey('applyId', $data);
+        $this->assertArrayHasKey('bizNo', $data);
+        $this->assertArrayHasKey('payAccountType', $data);
+        $this->assertArrayHasKey('payTag', $data);
+        $this->assertArrayHasKey('remark', $data);
+        $this->assertArrayHasKey('recAccountType', $data);
+        $this->assertArrayHasKey('recTag', $data);
+        $this->assertArrayHasKey('recRemark', $data);
+        $this->assertArrayHasKey('recSystem', $data);
+        $this->assertArrayHasKey('status', $data);
+        $this->assertArrayHasKey('currency', $data);
+        $this->assertArrayHasKey('amount', $data);
+        $this->assertArrayHasKey('fee', $data);
+        $this->assertArrayHasKey('sn', $data);
+    }
 }

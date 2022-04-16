@@ -15,7 +15,7 @@ class Symbol extends KuMEXApi
     /**
      * Get the ticker details of a symbol.
      *
-     * @param  string $symbol
+     * @param string $symbol
      * @return array
      * @throws \KuMEX\SDK\Exceptions\BusinessException
      * @throws \KuMEX\SDK\Exceptions\HttpException
@@ -30,7 +30,7 @@ class Symbol extends KuMEXApi
     /**
      * Get the snapshot details of a symbol.
      *
-     * @param  string $symbol
+     * @param string $symbol
      * @return array
      * @throws \KuMEX\SDK\Exceptions\BusinessException
      * @throws \KuMEX\SDK\Exceptions\HttpException
@@ -45,7 +45,7 @@ class Symbol extends KuMEXApi
     /**
      * Get the snapshot details of a symbol.
      *
-     * @param  string $symbol
+     * @param string $symbol
      * @return array
      * @throws \KuMEX\SDK\Exceptions\BusinessException
      * @throws \KuMEX\SDK\Exceptions\HttpException
@@ -60,7 +60,7 @@ class Symbol extends KuMEXApi
     /**
      * Get the snapshot details of a symbol.
      *
-     * @param  string $symbol
+     * @param string $symbol
      * @return array
      * @throws \KuMEX\SDK\Exceptions\BusinessException
      * @throws \KuMEX\SDK\Exceptions\HttpException
@@ -75,9 +75,9 @@ class Symbol extends KuMEXApi
     /**
      * Get the level2 message of a symbol.
      *
-     * @param  string $symbol
-     * @param  number $start
-     * @param  number $end
+     * @param string $symbol
+     * @param number $start
+     * @param number $end
      * @return array
      * @throws \KuMEX\SDK\Exceptions\BusinessException
      * @throws \KuMEX\SDK\Exceptions\HttpException
@@ -92,17 +92,17 @@ class Symbol extends KuMEXApi
     }
 
     /**
-     * @deprecated
-     *
-     * Get the level3 message of a symbol.
-     *
-     * @param  string $symbol
-     * @param  number $start
-     * @param  number $end
+     * @param string $symbol
+     * @param number $start
+     * @param number $end
      * @return array
      * @throws \KuMEX\SDK\Exceptions\BusinessException
      * @throws \KuMEX\SDK\Exceptions\HttpException
      * @throws \KuMEX\SDK\Exceptions\InvalidApiUriException
+     * @deprecated
+     *
+     * Get the level3 message of a symbol.
+     *
      */
     public function getLevel3Message($symbol, $start, $end)
     {
@@ -115,7 +115,7 @@ class Symbol extends KuMEXApi
     /**
      * Get the trade history details of a symbol.
      *
-     * @param  string $symbol
+     * @param string $symbol
      * @return array
      * @throws \KuMEX\SDK\Exceptions\BusinessException
      * @throws \KuMEX\SDK\Exceptions\HttpException
@@ -149,6 +149,34 @@ class Symbol extends KuMEXApi
             '/api/v1/kline/query',
             compact('symbol', 'from', 'to', 'granularity')
         );
+        return $response->getApiData();
+    }
+
+    /**
+     * Get the depth20 of level2.
+     * @param string $symbol
+     * @return mixed
+     * @throws \KuMEX\SDK\Exceptions\BusinessException
+     * @throws \KuMEX\SDK\Exceptions\HttpException
+     * @throws \KuMEX\SDK\Exceptions\InvalidApiUriException
+     */
+    public function getLevel2Depth20($symbol)
+    {
+        $response = $this->call(Request::METHOD_GET, '/api/v1/level2/depth20', ['symbol' => $symbol]);
+        return $response->getApiData();
+    }
+
+    /**
+     * Get the depth100 of level2.
+     * @param string $symbol
+     * @return mixed
+     * @throws \KuMEX\SDK\Exceptions\BusinessException
+     * @throws \KuMEX\SDK\Exceptions\HttpException
+     * @throws \KuMEX\SDK\Exceptions\InvalidApiUriException
+     */
+    public function getLevel2Depth100($symbol)
+    {
+        $response = $this->call(Request::METHOD_GET, '/api/v1/level2/depth100', ['symbol' => $symbol]);
         return $response->getApiData();
     }
 }
